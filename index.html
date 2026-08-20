@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>uma missão especial para a Vitória</title>
+<meta name="description" content="Uma pequena missão amaldiçoada com um pedido no final.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Cinzel:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- AMBIENT LAYERS -->
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="grain" aria-hidden="true"></div>
+<canvas id="particles" aria-hidden="true"></canvas>
+<div class="sakura-layer" id="sakuraLayer" aria-hidden="true"></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <svg class="loader-seal" viewBox="0 0 200 200" width="140" height="140">
+    <circle class="seal-ring seal-ring--outer" cx="100" cy="100" r="88"/>
+    <circle class="seal-ring seal-ring--inner" cx="100" cy="100" r="66"/>
+    <path class="seal-glyph" d="M100 30 L124 88 L182 100 L124 112 L100 170 L76 112 L18 100 L76 88 Z"/>
+  </svg>
+  <p class="loader-text">preparando um selo especial<span class="dots"><span>.</span><span>.</span><span>.</span></span></p>
+</div>
+
+<!-- SCENE TRANSITION FLASH -->
+<div class="domain-transition" id="domainTransition" aria-hidden="true">
+  <div class="domain-transition__seal"></div>
+</div>
+
+<!-- TOP BAR: progress + mute -->
+<div class="topbar" id="topbar">
+  <div class="progress-dots" id="progressDots" aria-hidden="true">
+    <span class="dot" data-dot="intro"></span>
+    <span class="dot" data-dot="missao"></span>
+    <span class="dot" data-dot="romantico"></span>
+    <span class="dot" data-dot="pedido"></span>
+    <span class="dot" data-dot="final"></span>
+  </div>
+  <button class="mute-btn" id="muteBtn" type="button" aria-pressed="false" aria-label="Ativar som">
+    <span class="mute-icon" id="muteIcon">🔈</span>
+  </button>
+</div>
+
+<main class="app" id="app">
+
+  <!-- ================= SCENE 1 — INTRO ================= -->
+  <section class="scene scene--intro is-active" data-scene="intro">
+    <div class="scene-bg scene-bg--void" aria-hidden="true"></div>
+    <div class="scene-inner">
+      <p class="whisper" data-line="1">Vitória<span class="whisper-dots">...</span></p>
+      <p class="whisper whisper--delay" data-line="2">Você foi escolhida para uma missão especial.</p>
+      <button class="btn-primary" id="btnStartMission" type="button">
+        <span class="btn-primary__ring"></span>
+        <span>ENTRAR NA MISSÃO</span>
+      </button>
+      <p class="scene-hint">toque para começar — som opcional no canto superior</p>
+    </div>
+  </section>
+
+  <!-- ================= SCENE 2 — A MISSÃO ================= -->
+  <section class="scene scene--missao" data-scene="missao">
+    <div class="scene-bg scene-bg--ink" aria-hidden="true"></div>
+    <div class="scene-inner scene-inner--wide">
+      <p class="section-eyebrow">registro de missão · grau especial</p>
+      <h2 class="scene-title">Existe uma maldição<br>extremamente perigosa...</h2>
+
+      <div class="char-row" id="charRowMissao">
+        <button class="char-card" data-char="gojo" type="button">
+          <span class="char-portrait" style="--char-color:#7fd8ff;--char-color-soft:rgba(127,216,255,.25)">
+            <span class="char-glyph">六</span>
+          </span>
+          <span class="char-name">Gojo Satoru</span>
+          <span class="char-quote">"Relaxa. Esse caso... eu confio a você."</span>
+        </button>
+
+        <button class="char-card" data-char="megumi" type="button">
+          <span class="char-portrait" style="--char-color:#8ea6c9;--char-color-soft:rgba(142,166,201,.25)">
+            <span class="char-glyph">狗</span>
+          </span>
+          <span class="char-name">Megumi Fushiguro</span>
+          <span class="char-quote">"...isso nem é uma maldição de verdade."</span>
+        </button>
+
+        <button class="char-card" data-char="nobara" type="button">
+          <span class="char-portrait" style="--char-color:#ffb347;--char-color-soft:rgba(255,179,71,.25)">
+            <span class="char-glyph">釘</span>
+          </span>
+          <span class="char-name">Nobara Kugisaki</span>
+          <span class="char-quote">"Ah, essa eu quero ver de camarote."</span>
+        </button>
+
+        <button class="char-card" data-char="yuji" type="button">
+          <span class="char-portrait" style="--char-color:#ff8a5c;--char-color-soft:rgba(255,138,92,.25)">
+            <span class="char-glyph">咒</span>
+          </span>
+          <span class="char-name">Yuji Itadori</span>
+          <span class="char-quote">"Bora! Você consegue, eu sei disso!"</span>
+        </button>
+      </div>
+
+      <p class="scene-reveal-text">
+        Um feiticeiro está preso havia semanas em um pensamento que se repete,
+        se multiplica e não sai da cabeça dele — não importa quantas técnicas ele tente.
+      </p>
+      <p class="scene-reveal-text scene-reveal-text--big">
+        A maldição tem um nome: <span class="glow-pink">não conseguir parar de pensar em você.</span>
+      </p>
+
+      <button class="btn-secondary" id="btnToRomantico" type="button">
+        <span>CONTINUAR A MISSÃO</span>
+        <span class="btn-arrow">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= SCENE 3 — MOMENTO ROMÂNTICO ================= -->
+  <section class="scene scene--romantico" data-scene="romantico">
+    <div class="scene-bg scene-bg--rose" aria-hidden="true"></div>
+    <div class="scene-inner">
+      <p class="section-eyebrow section-eyebrow--light">reversa de maldição · procedimento único</p>
+      <h2 class="scene-title scene-title--serif">Mas existe uma única pessoa<br>capaz de reverter isso...</h2>
+
+      <div class="reveal-name" id="revealName">
+        <span class="reveal-name__label">o feiticeiro examina o nome no papel e sorri</span>
+        <span class="reveal-name__value">VITÓRIA <span class="heart">💗</span></span>
+      </div>
+
+      <p class="scene-reveal-text">
+        Nenhuma técnica ancestral, nenhum grau especial, nenhum domínio resolveria isso.
+        Só ela. Só a Vitória.
+      </p>
+
+      <button class="btn-secondary" id="btnToPedido" type="button">
+        <span>SEGUIR PARA O PROCEDIMENTO</span>
+        <span class="btn-arrow">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= SCENE 4 — PEDIDO ================= -->
+  <section class="scene scene--pedido" data-scene="pedido">
+    <div class="scene-bg scene-bg--climax" aria-hidden="true">
+      <canvas id="pedidoCanvas"></canvas>
+    </div>
+
+    <div class="char-orbit" id="charOrbit" aria-hidden="true">
+      <span class="orbit-char" style="--oc-color:#7fd8ff" data-char="gojo">六</span>
+      <span class="orbit-char" style="--oc-color:#8ea6c9" data-char="megumi">狗</span>
+      <span class="orbit-char" style="--oc-color:#ffb347" data-char="nobara">釘</span>
+      <span class="orbit-char" style="--oc-color:#ff8a5c" data-char="yuji">咒</span>
+    </div>
+
+    <div class="sukuna-reaction" id="sukunaReaction">
+      <span class="sukuna-glyph">四</span>
+      <span class="sukuna-text" id="sukunaText">kkkkkk foge dele, Vitória</span>
+    </div>
+
+    <div class="scene-inner pedido-safe-zone" id="pedidoSafeZone">
+      <p class="section-eyebrow section-eyebrow--light">o pedido</p>
+      <h1 class="pedido-title">Ndv<br> COMER UM SUSHIZINHO COMIGO?</h1>
+      <p class="pedido-subtitle">Você ganharia mt aura.</p>
+
+      <div class="pedido-buttons">
+        <button class="btn-sim" id="btnSim" type="button">SIM, CLARO 💗</button>
+        <button class="btn-nao" id="btnNao" type="button">NÃO</button>
+      </div>
+      <p class="pedido-counter" id="pedidoCounter" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- ================= SCENE 5 — FINAL / CELEBRAÇÃO ================= -->
+  <section class="scene scene--final" data-scene="final">
+    <div class="scene-bg scene-bg--celebration" aria-hidden="true">
+      <canvas id="celebrationCanvas"></canvas>
+    </div>
+    <div class="scene-inner">
+      <p class="final-line final-line--1" id="finalLine1">EU SABIA! 💗</p>
+      <p class="final-line final-line--2" id="finalLine2">Então está marcado. 🥹</p>
+
+      <div class="char-row char-row--cheer" id="charRowFinal">
+        <span class="char-portrait char-portrait--sm cheer" style="--char-color:#7fd8ff;--char-color-soft:rgba(127,216,255,.25)"><span class="char-glyph">六</span></span>
+        <span class="char-portrait char-portrait--sm cheer" style="--char-color:#8ea6c9;--char-color-soft:rgba(142,166,201,.25)"><span class="char-glyph">狗</span></span>
+        <span class="char-portrait char-portrait--sm cheer" style="--char-color:#ffb347;--char-color-soft:rgba(255,179,71,.25)"><span class="char-glyph">釘</span></span>
+        <span class="char-portrait char-portrait--sm cheer" style="--char-color:#ff8a5c;--char-color-soft:rgba(255,138,92,.25)"><span class="char-glyph">咒</span></span>
+      </div>
+
+      <p class="final-message" id="finalMessage">
+        Obrigado por jogar essa pequena missão até o fim. Debaixo de todo esse exagero de
+        energia amaldiçoada rosa tem uma coisa bem simples: eu queria te chamar pra comer
+        um sushizinho de um jeito que você não esquecesse. Agora é oficial — o rodízio
+        já tem data marcada.
+      </p>
+
+      <div class="final-seal">
+        <svg viewBox="0 0 120 120" width="80" height="80">
+          <circle cx="60" cy="60" r="52" class="ms-ring"/>
+          <path d="M60 20 L74 52 L108 60 L74 68 L60 100 L46 68 L12 60 L46 52 Z" class="ms-star"/>
+        </svg>
+        <p class="final-seal__label">domínio selado — sushizinho confirmado</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
